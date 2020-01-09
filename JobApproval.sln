@@ -10,6 +10,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobApprovalTests", "JobAppr
 		{D566C992-5087-4FEE-BE7B-8AE71884BB6F} = {D566C992-5087-4FEE-BE7B-8AE71884BB6F}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobApprovalWeb", "JobApprovalWeb\JobApprovalWeb.csproj", "{6F9CEDAA-96D4-456B-9421-A9DB7C19A905}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +26,10 @@ Global
 		{EC04A520-9C83-4FF6-83BA-88FD9D214B40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC04A520-9C83-4FF6-83BA-88FD9D214B40}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC04A520-9C83-4FF6-83BA-88FD9D214B40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F9CEDAA-96D4-456B-9421-A9DB7C19A905}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F9CEDAA-96D4-456B-9421-A9DB7C19A905}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F9CEDAA-96D4-456B-9421-A9DB7C19A905}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F9CEDAA-96D4-456B-9421-A9DB7C19A905}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
