@@ -3,58 +3,58 @@ using JobApproval;
 
 namespace JobApprovalTests
 {
-    [TestFixture, Category("Denies")]
+    [TestFixture, Category("Job Processor Denies")]
     public class JobProcessorDenies
     {
-        JobProcessor jobProcessor;
-        IReferenceData referenceData;
+        JobProcessor JobProcessor;
+        IReferenceData ReferenceData;
 
         [SetUp]
         public void Setup()
         {
-            referenceData = new ReferenceData();
-            jobProcessor = new JobProcessor(referenceData);
+            ReferenceData = new ReferenceData();
+            JobProcessor = new JobProcessor(ReferenceData);
         }
 
         [Test]
         public void IfTyresAreGreaterThan4()
         {
-            JobSheet jobSheet = new JobSheet(0);
+            JobSheet jobSheet = new JobSheet(ReferenceData.GetUnitMinutes("tyre") * 5, ReferenceData.GetUnitCost("tyre") * 5);
             jobSheet.AddItem(new JobItem("tyre"));
             jobSheet.AddItem(new JobItem("tyre"));
             jobSheet.AddItem(new JobItem("tyre"));
             jobSheet.AddItem(new JobItem("tyre"));
             jobSheet.AddItem(new JobItem("tyre"));
-            Assert.IsFalse(jobProcessor.Process(jobSheet));
+            Assert.IsFalse(JobProcessor.Process(jobSheet));
         }
 
         [Test]
         public void IfBrakePadsAndDiscAreNotBothBeingChanged()
         {
-            JobSheet jobSheet = new JobSheet(0);
+            JobSheet jobSheet = new JobSheet(ReferenceData.GetUnitMinutes("brake pad"), ReferenceData.GetUnitCost("brake pad"));
             jobSheet.AddItem(new JobItem("brake pad"));
-            Assert.IsFalse(jobProcessor.Process(jobSheet));
-            jobSheet = new JobSheet(0);
+            Assert.IsFalse(JobProcessor.Process(jobSheet));
+            jobSheet = new JobSheet(ReferenceData.GetUnitMinutes("brake disc"), ReferenceData.GetUnitCost("brake disc"));
             jobSheet.AddItem(new JobItem("brake disc"));
-            Assert.IsFalse(jobProcessor.Process(jobSheet));
+            Assert.IsFalse(JobProcessor.Process(jobSheet));
         }
 
         [Test]
         public void IfExhaustIsGreaterThan1()
         {
-            JobSheet jobSheet = new JobSheet(0);
+            JobSheet jobSheet = new JobSheet(ReferenceData.GetUnitMinutes("exhaust") * 2, ReferenceData.GetUnitCost("exhaust") * 2);
             jobSheet.AddItem(new JobItem("exhaust"));
             jobSheet.AddItem(new JobItem("exhaust"));
-            Assert.IsFalse(jobProcessor.Process(jobSheet));
+            Assert.IsFalse(JobProcessor.Process(jobSheet));
         }
 
         [Test]
         public void IfLabourHoursExceedTheReferenceNumber()
         {
-            JobSheet jobSheet = new JobSheet(2);
+            JobSheet jobSheet = new JobSheet(ReferenceData.GetUnitMinutes("tyre") * 2, ReferenceData.GetUnitCost("tyre") * 2);
             jobSheet.AddItem(new JobItem("tyre"));
             jobSheet.AddItem(new JobItem("tyre"));
-            Assert.IsFalse(jobProcessor.Process(jobSheet));
+            Assert.IsFalse(JobProcessor.Process(jobSheet));
         }
     }
 }

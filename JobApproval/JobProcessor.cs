@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace JobApproval
+﻿namespace JobApproval
 {
     public class JobProcessor
     {
@@ -18,11 +16,21 @@ namespace JobApproval
 
         private bool BrakesCanBeChanged(JobSheet jobSheet)
         {
-            if (jobSheet.RequiresBrakeDiscChange() || jobSheet.RequiresBrakePadChange())
+            if (RequiresBrakeDiscChange(jobSheet) || RequiresBrakePadChange(jobSheet))
             {
-                return jobSheet.RequiresBrakeDiscChange() && jobSheet.RequiresBrakePadChange();
+                return RequiresBrakeDiscChange(jobSheet) && RequiresBrakePadChange(jobSheet);
             }
             return true;
+        }
+
+        private bool RequiresBrakeDiscChange(JobSheet jobSheet)
+        {
+            return jobSheet.CountItems("brake disc") >= 1;
+        }
+
+        private bool RequiresBrakePadChange(JobSheet jobSheet)
+        {
+            return jobSheet.CountItems("brake pad") >= 1;
         }
 
         private bool CheckLimits(JobSheet jobSheet)
@@ -31,17 +39,12 @@ namespace JobApproval
             return jobSheet.CountItems("tyre") < 5 && !(jobSheet.CountItems("exhaust") > 1);
         }
 
-        private int GetMinutes(string itemID)
-        {
-            return ReferenceData.GetTime(itemID);
-        }
-
         public int GetLabourHours(JobSheet jobSheet)
         {
             int minutes = 0;
             foreach (JobItem item in jobSheet.Items)
             {
-                minutes += ReferenceData.GetTime(item.ID);
+                minutes += ReferenceData.GetUnitMinutes(item.ID);
             }
             return minutes / 60;
         }

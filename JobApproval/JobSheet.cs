@@ -6,27 +6,19 @@ namespace JobApproval
     public class JobSheet
     {
         public int TotalHours;
+        public int TotalPrice;
         public IList<JobItem> Items;
 
-        public JobSheet(int totalHours)
+        public JobSheet(int totalHours, int totalPrice)
         {
             TotalHours = totalHours;
+            TotalPrice = totalPrice;
             Items = new List<JobItem>();
         }
 
         public void AddItem(JobItem item)
         {
             Items.Add(item);
-        }
-
-        public bool RequiresBrakeDiscChange()
-        {
-            return CountItems("brake disc") >= 1;
-        }
-
-        public bool RequiresBrakePadChange()
-        {
-            return CountItems("brake pad") >= 1;
         }
 
         public int CountItems(string itemID)

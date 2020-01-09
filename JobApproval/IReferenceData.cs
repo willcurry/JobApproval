@@ -6,7 +6,7 @@ namespace JobApproval
 {
     public interface IReferenceData
     {
-        int GetPrice(string itemID);
-        int GetTime(string itemID);
+        int GetUnitCost(string itemID);
+        int GetUnitMinutes(string itemID);
     }
 }

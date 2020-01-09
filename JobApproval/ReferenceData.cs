@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace JobApproval
 {
@@ -16,7 +14,7 @@ namespace JobApproval
             PopulateData();
         }
 
-        public int GetPrice(string itemID)
+        public int GetUnitCost(string itemID)
         {
             int price;
             if (Prices.TryGetValue(itemID, out price)) {
@@ -25,7 +23,7 @@ namespace JobApproval
             throw new KeyNotFoundException();
         }
 
-        public int GetTime(string itemID)
+        public int GetUnitMinutes(string itemID)
         {
             int minutes;
             if (Time.TryGetValue(itemID, out minutes)) {
