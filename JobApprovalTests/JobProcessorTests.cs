@@ -3,7 +3,8 @@ using JobApproval;
 
 namespace JobApprovalTests
 {
-    public class JobProcessorTests
+    [TestFixture, Category("Denies")]
+    public class JobProcessorDenies
     {
         JobProcessor jobProcessor;
 
@@ -14,29 +15,37 @@ namespace JobApprovalTests
         }
 
         [Test]
-        public void DeniesJobSheetIfTyresAreGreaterThan4()
+        public void IfTyresAreGreaterThan4()
         {
-            JobSheet jobSheet = new JobSheet();
+            JobSheet jobSheet = new JobSheet(0);
             jobSheet.Tyres = 5;
             Assert.IsFalse(jobProcessor.Process(jobSheet));
         }
 
         [Test]
-        public void DeniesJobSheetIfBrakePadsAndDiscAreNotBothBeingChanged()
+        public void IfBrakePadsAndDiscAreNotBothBeingChanged()
         {
-            JobSheet jobSheet = new JobSheet();
+            JobSheet jobSheet = new JobSheet(0);
             jobSheet.BrakePad = 1;
             Assert.IsFalse(jobProcessor.Process(jobSheet));
-            jobSheet = new JobSheet();
+            jobSheet = new JobSheet(0);
             jobSheet.BrakeDisc = 1;
             Assert.IsFalse(jobProcessor.Process(jobSheet));
         }
 
         [Test]
-        public void DeniesJobSheetIfExhaustIsGreaterThan1()
+        public void IfExhaustIsGreaterThan1()
         {
-            JobSheet jobSheet = new JobSheet();
+            JobSheet jobSheet = new JobSheet(0);
             jobSheet.Exhaust = 2;
+            Assert.IsFalse(jobProcessor.Process(jobSheet));
+        }
+
+        [Test]
+        public void IfLabourHoursExceedTheReferenceNumber()
+        {
+            JobSheet jobSheet = new JobSheet(2);
+            jobSheet.Tyres = 2;
             Assert.IsFalse(jobProcessor.Process(jobSheet));
         }
     }

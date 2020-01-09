@@ -6,7 +6,7 @@ namespace JobApproval
     {
         public bool Process(JobSheet jobSheet)
         {
-            return jobSheet.Tyres < 5 && BrakesCanBeChanged(jobSheet) && !(jobSheet.Exhaust > 1);
+            return CheckLimits(jobSheet) && BrakesCanBeChanged(jobSheet) && CheckLabourTime(jobSheet);
         }
 
         private bool BrakesCanBeChanged(JobSheet jobSheet)
@@ -16,6 +16,17 @@ namespace JobApproval
                 return jobSheet.RequiresBrakeDiscChange() && jobSheet.RequiresBrakePadChange();
             }
             return true;
+        }
+
+        private bool CheckLimits(JobSheet jobSheet)
+        {
+
+            return jobSheet.Tyres < 5 && !(jobSheet.Exhaust > 1);
+        }
+
+        private bool CheckLabourTime(JobSheet jobSheet)
+        {
+            return jobSheet.TotalHours <= jobSheet.GetLabourHours();
         }
     }
 }
