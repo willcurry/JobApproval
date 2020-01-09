@@ -25,7 +25,7 @@ namespace JobApprovalTests
             jobSheet.AddItem(new JobItem("tyre"));
             jobSheet.AddItem(new JobItem("tyre"));
             jobSheet.AddItem(new JobItem("tyre"));
-            Assert.IsFalse(JobProcessor.Process(jobSheet));
+            Assert.AreEqual(JobProcessor.Process(jobSheet), Outcomes.Decline);
         }
 
         [Test]
@@ -33,10 +33,10 @@ namespace JobApprovalTests
         {
             JobSheet jobSheet = new JobSheet(ReferenceData.GetUnitMinutes("brake pad"), ReferenceData.GetUnitCost("brake pad"));
             jobSheet.AddItem(new JobItem("brake pad"));
-            Assert.IsFalse(JobProcessor.Process(jobSheet));
+            Assert.AreEqual(JobProcessor.Process(jobSheet), Outcomes.Decline);
             jobSheet = new JobSheet(ReferenceData.GetUnitMinutes("brake disc"), ReferenceData.GetUnitCost("brake disc"));
             jobSheet.AddItem(new JobItem("brake disc"));
-            Assert.IsFalse(JobProcessor.Process(jobSheet));
+            Assert.AreEqual(JobProcessor.Process(jobSheet), Outcomes.Decline);
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace JobApprovalTests
             JobSheet jobSheet = new JobSheet(ReferenceData.GetUnitMinutes("exhaust") * 2, ReferenceData.GetUnitCost("exhaust") * 2);
             jobSheet.AddItem(new JobItem("exhaust"));
             jobSheet.AddItem(new JobItem("exhaust"));
-            Assert.IsFalse(JobProcessor.Process(jobSheet));
+            Assert.AreEqual(JobProcessor.Process(jobSheet), Outcomes.Decline);
         }
 
         [Test]
@@ -54,7 +54,7 @@ namespace JobApprovalTests
             JobSheet jobSheet = new JobSheet(ReferenceData.GetUnitMinutes("tyre") * 3, ReferenceData.GetUnitCost("tyre") * 2);
             jobSheet.AddItem(new JobItem("tyre"));
             jobSheet.AddItem(new JobItem("tyre"));
-            Assert.IsFalse(JobProcessor.Process(jobSheet));
+            Assert.AreEqual(JobProcessor.Process(jobSheet), Outcomes.Decline);
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace JobApprovalTests
             JobSheet jobSheet = new JobSheet(ReferenceData.GetUnitMinutes("tyre") * 2, ReferenceData.GetUnitCost("tyre") * 3);
             jobSheet.AddItem(new JobItem("tyre"));
             jobSheet.AddItem(new JobItem("tyre"));
-            Assert.IsFalse(JobProcessor.Process(jobSheet));
+            Assert.AreEqual(JobProcessor.Process(jobSheet), Outcomes.Decline);
         }
     }
 
@@ -86,7 +86,7 @@ namespace JobApprovalTests
             JobSheet jobSheet = new JobSheet(ReferenceData.GetUnitMinutes("tyre") * 2, ReferenceData.GetUnitCost("tyre") * 2);
             jobSheet.AddItem(new JobItem("tyre"));
             jobSheet.AddItem(new JobItem("tyre"));
-            Assert.IsTrue(JobProcessor.Process(jobSheet));
+            Assert.AreEqual(JobProcessor.Process(jobSheet), Outcomes.Approve);
         }
     }
 }

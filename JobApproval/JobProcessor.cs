@@ -3,6 +3,13 @@ using System.Linq;
 
 namespace JobApproval
 {
+    public enum Outcomes
+    {
+        Approve,
+        Refer,
+        Decline
+    }
+
     public class JobProcessor
     {
         private IReferenceData ReferenceData;
@@ -12,10 +19,16 @@ namespace JobApproval
             ReferenceData = referenceData;
         }
 
-        public bool Process(JobSheet jobSheet)
+        public Outcomes Process(JobSheet jobSheet)
         {
-
-            return CheckLimits(jobSheet) && BrakesCanBeChanged(jobSheet) && TotalHoursAreValid(jobSheet) && TotalPriceIsValid(jobSheet);
+            if (CheckLimits(jobSheet) && BrakesCanBeChanged(jobSheet) && TotalHoursAreValid(jobSheet))
+            {
+                if (TotalPriceIsValid(jobSheet))
+                {
+                    return Outcomes.Approve;
+                }
+            }
+            return Outcomes.Decline;
         }
 
         private bool BrakesCanBeChanged(JobSheet jobSheet)
