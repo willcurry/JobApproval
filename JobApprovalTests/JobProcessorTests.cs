@@ -14,9 +14,10 @@ namespace JobApprovalTests
         }
 
         [Test]
-        public void Denies()
+        public void DeniesJobSheetIfTyresAreGreaterThan4()
         {
-            Assert.IsFalse(jobProcessor.Process());
+            JobSheet jobSheet = new JobSheet(5);
+            Assert.IsFalse(jobProcessor.Process(jobSheet));
         }
     }
 }

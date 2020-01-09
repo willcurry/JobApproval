@@ -4,9 +4,9 @@ namespace JobApproval
 {
     public class JobProcessor
     {
-        public bool Process()
+        public bool Process(JobSheet jobSheet)
         {
-            return false;
+            return jobSheet.TyresNeedingChange < 5;
         }
     }
 }
