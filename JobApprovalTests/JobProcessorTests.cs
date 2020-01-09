@@ -56,5 +56,14 @@ namespace JobApprovalTests
             jobSheet.AddItem(new JobItem("tyre"));
             Assert.IsFalse(JobProcessor.Process(jobSheet));
         }
+
+        [Test]
+        public void IfTotalPriceExceeds15PercentOfTheReferencePrice()
+        {
+            JobSheet jobSheet = new JobSheet(ReferenceData.GetUnitMinutes("tyre") * 2, ReferenceData.GetUnitCost("tyre") * 3);
+            jobSheet.AddItem(new JobItem("tyre"));
+            jobSheet.AddItem(new JobItem("tyre"));
+            Assert.IsFalse(JobProcessor.Process(jobSheet));
+        }
     }
 }

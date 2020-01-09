@@ -15,7 +15,7 @@ namespace JobApproval
         public bool Process(JobSheet jobSheet)
         {
 
-            return CheckLimits(jobSheet) && BrakesCanBeChanged(jobSheet) && TotalHoursAreValid(jobSheet);
+            return CheckLimits(jobSheet) && BrakesCanBeChanged(jobSheet) && TotalHoursAreValid(jobSheet) && TotalPriceIsValid(jobSheet);
         }
 
         private bool BrakesCanBeChanged(JobSheet jobSheet)
@@ -50,7 +50,7 @@ namespace JobApproval
             return true;
         }
 
-        public int GetLabourMinutes(JobSheet jobSheet)
+        private int GetCorrectLabourTime(JobSheet jobSheet)
         {
             int minutes = 0;
             foreach (JobItem item in jobSheet.Items)
@@ -60,9 +60,25 @@ namespace JobApproval
             return minutes;
         }
 
+        private int GetCorrectLabourPrice(JobSheet jobSheet)
+        {
+            int total = 0;
+            foreach (JobItem item in jobSheet.Items)
+            {
+                total += ReferenceData.GetUnitCost(item.ID);
+            }
+            return total;
+        }
+
         private bool TotalHoursAreValid(JobSheet jobSheet)
         {
-            return jobSheet.TotalMinutes <= GetLabourMinutes(jobSheet);
+            return jobSheet.TotalMinutes <= GetCorrectLabourTime(jobSheet);
+        }
+
+        private bool TotalPriceIsValid(JobSheet jobSheet)
+        {
+            int correctPrice = GetCorrectLabourPrice(jobSheet);
+            return jobSheet.TotalPrice < (correctPrice + correctPrice * 0.15);
         }
     }
 }
