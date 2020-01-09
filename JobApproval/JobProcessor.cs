@@ -11,7 +11,8 @@
 
         public bool Process(JobSheet jobSheet)
         {
-            return CheckLimits(jobSheet) && BrakesCanBeChanged(jobSheet) && CheckLabourTime(jobSheet);
+
+            return CheckLimits(jobSheet) && BrakesCanBeChanged(jobSheet) && TotalHoursAreValid(jobSheet);
         }
 
         private bool BrakesCanBeChanged(JobSheet jobSheet)
@@ -39,19 +40,19 @@
             return jobSheet.CountItems("tyre") < 5 && !(jobSheet.CountItems("exhaust") > 1);
         }
 
-        public int GetLabourHours(JobSheet jobSheet)
+        public int GetLabourMinutes(JobSheet jobSheet)
         {
             int minutes = 0;
             foreach (JobItem item in jobSheet.Items)
             {
                 minutes += ReferenceData.GetUnitMinutes(item.ID);
             }
-            return minutes / 60;
+            return minutes;
         }
 
-        private bool CheckLabourTime(JobSheet jobSheet)
+        private bool TotalHoursAreValid(JobSheet jobSheet)
         {
-            return jobSheet.TotalHours <= GetLabourHours(jobSheet);
+            return jobSheet.TotalMinutes <= GetLabourMinutes(jobSheet);
         }
     }
 }

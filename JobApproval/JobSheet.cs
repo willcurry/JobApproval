@@ -5,13 +5,13 @@ namespace JobApproval
 {
     public class JobSheet
     {
-        public int TotalHours;
+        public int TotalMinutes;
         public int TotalPrice;
         public IList<JobItem> Items;
 
-        public JobSheet(int totalHours, int totalPrice)
+        public JobSheet(int totalMinutes, int totalPrice)
         {
-            TotalHours = totalHours;
+            TotalMinutes = totalMinutes;
             TotalPrice = totalPrice;
             Items = new List<JobItem>();
         }

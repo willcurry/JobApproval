@@ -51,7 +51,7 @@ namespace JobApprovalTests
         [Test]
         public void IfLabourHoursExceedTheReferenceNumber()
         {
-            JobSheet jobSheet = new JobSheet(ReferenceData.GetUnitMinutes("tyre") * 2, ReferenceData.GetUnitCost("tyre") * 2);
+            JobSheet jobSheet = new JobSheet(ReferenceData.GetUnitMinutes("tyre") * 3, ReferenceData.GetUnitCost("tyre") * 2);
             jobSheet.AddItem(new JobItem("tyre"));
             jobSheet.AddItem(new JobItem("tyre"));
             Assert.IsFalse(JobProcessor.Process(jobSheet));
