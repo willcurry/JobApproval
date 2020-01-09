@@ -23,10 +23,7 @@ namespace JobApproval
         {
             if (CheckLimits(jobSheet) && BrakesCanBeChanged(jobSheet) && TotalHoursAreValid(jobSheet))
             {
-                if (TotalPriceIsValid(jobSheet))
-                {
-                    return Outcomes.Approve;
-                }
+                return DetermineOutCome(jobSheet);
             }
             return Outcomes.Decline;
         }
@@ -88,12 +85,22 @@ namespace JobApproval
             return jobSheet.TotalMinutes <= GetCorrectLabourTime(jobSheet);
         }
 
-        private bool TotalPriceIsValid(JobSheet jobSheet)
+        private Outcomes DetermineOutCome(JobSheet jobSheet)
         {
             int correctPrice = GetCorrectLabourPrice(jobSheet);
-            double max = correctPrice + (correctPrice * 0.15);
-            double min = correctPrice - (correctPrice * 0.1);
-            return jobSheet.TotalPrice < max && jobSheet.TotalPrice > min;
+            bool greaterThan15 = jobSheet.TotalPrice > correctPrice + (correctPrice * 0.15);
+            bool greaterThan10 = jobSheet.TotalPrice > correctPrice + (correctPrice * 0.10);
+            bool lessThan10 = jobSheet.TotalPrice < correctPrice - (correctPrice * 0.10);
+
+            if (greaterThan15)
+            {
+                return Outcomes.Decline;
+            } 
+            else if (!greaterThan10 && !lessThan10)
+            {
+                return Outcomes.Approve;
+            }
+            return Outcomes.Refer;
         }
     }
 }

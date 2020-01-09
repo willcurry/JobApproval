@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using JobApproval;
+using System;
 
 namespace JobApprovalTests
 {
@@ -83,10 +84,25 @@ namespace JobApprovalTests
         [Test]
         public void IfTotalPriceIsWithin10PercentOfTheReferencePrice()
         {
-            JobSheet jobSheet = new JobSheet(ReferenceData.GetUnitMinutes("tyre") * 2, ReferenceData.GetUnitCost("tyre") * 2);
+            int correctPrice = ReferenceData.GetUnitCost("tyre") * 2;
+            JobSheet jobSheet = new JobSheet(ReferenceData.GetUnitMinutes("tyre") * 2, Convert.ToInt32(correctPrice + correctPrice * 0.09));
             jobSheet.AddItem(new JobItem("tyre"));
             jobSheet.AddItem(new JobItem("tyre"));
             Assert.AreEqual(JobProcessor.Process(jobSheet), Outcomes.Approve);
+            jobSheet = new JobSheet(ReferenceData.GetUnitMinutes("tyre") * 2, Convert.ToInt32(correctPrice - correctPrice * 0.09));
+            jobSheet.AddItem(new JobItem("tyre"));
+            jobSheet.AddItem(new JobItem("tyre"));
+            Assert.AreEqual(JobProcessor.Process(jobSheet), Outcomes.Approve);
+        }
+
+        [Test]
+        public void IfTotalPriceIsWithin10And15ItRefers()
+        {
+            int correctPrice = ReferenceData.GetUnitCost("tyre") * 2;
+            JobSheet jobSheet = new JobSheet(ReferenceData.GetUnitMinutes("tyre") * 2, Convert.ToInt32(correctPrice + correctPrice * 0.12));
+            jobSheet.AddItem(new JobItem("tyre"));
+            jobSheet.AddItem(new JobItem("tyre"));
+            Assert.AreEqual(JobProcessor.Process(jobSheet), Outcomes.Refer);
         }
     }
 }
