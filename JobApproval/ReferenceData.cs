@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace JobApproval
 {
@@ -6,11 +7,13 @@ namespace JobApproval
     {
         IDictionary<string, int> Prices;
         IDictionary<string, int> Time;
+        IDictionary<string, int> Limits;
 
         public ReferenceData()
         {
             Prices = new Dictionary<string, int>();
             Time = new Dictionary<string, int>();
+            Limits = new Dictionary<string, int>();
             PopulateData();
         }
 
@@ -32,6 +35,15 @@ namespace JobApproval
             throw new KeyNotFoundException();
         }
 
+        public int GetLimit(string itemID)
+        {
+            int limit;
+            if (Limits.TryGetValue(itemID, out limit)) {
+                return limit;
+            }
+            return Int32.MaxValue;
+        }
+
         private void PopulateData()
         {
             Time.Add("tyre", 30);
@@ -44,6 +56,9 @@ namespace JobApproval
             Prices.Add("oil", 20);
             Time.Add("exhaust", 240);
             Prices.Add("exhaust", 175);
+
+            Limits.Add("tyre", 4);
+            Limits.Add("exhaust", 1);
         }
     }
 }

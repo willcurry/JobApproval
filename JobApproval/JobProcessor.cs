@@ -1,4 +1,7 @@
-﻿namespace JobApproval
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace JobApproval
 {
     public class JobProcessor
     {
@@ -36,8 +39,15 @@
 
         private bool CheckLimits(JobSheet jobSheet)
         {
-
-            return jobSheet.CountItems("tyre") < 5 && !(jobSheet.CountItems("exhaust") > 1);
+            List<string> distinctItems = jobSheet.Items.Select(item => item.ID).Distinct().ToList();
+            foreach (string itemID in distinctItems)
+            {
+                if (jobSheet.CountItems(itemID) > ReferenceData.GetLimit(itemID))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public int GetLabourMinutes(JobSheet jobSheet)
