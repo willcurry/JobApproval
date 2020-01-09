@@ -7,11 +7,13 @@ namespace JobApprovalTests
     public class JobProcessorDenies
     {
         JobProcessor jobProcessor;
+        IReferenceData referenceData;
 
         [SetUp]
         public void Setup()
         {
-            jobProcessor = new JobProcessor();
+            referenceData = new ReferenceData();
+            jobProcessor = new JobProcessor(referenceData);
         }
 
         [Test]

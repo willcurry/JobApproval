@@ -32,11 +32,5 @@ namespace JobApproval
         {
             return BrakePad >= 1;
         }
-
-        public int GetLabourHours()
-        {
-            int minutes = Tyres * 30 + BrakeDisc * 90 + BrakePad * 60 + Oil * 30 + Exhaust * 240;
-            return minutes / 60;
-        }
     }
 }
