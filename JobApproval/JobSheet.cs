@@ -6,17 +6,24 @@ namespace JobApproval
 {
     public class JobSheet
     {
-        public int TyresNeedingChange { get; }
-        public bool ChangeBrakeDisc { get; }
-        public bool ChangeBrakePad { get; }
-        public int ExhaustsNeedingChange { get; }
+        public int Tyres { get; set; }
+        public int BrakeDisc { get; set; }
+        public int BrakePad { get; set; }
+        public int Exhaust { get; set; }
+        public int Oil { get; set; }
 
-        public JobSheet(int tyresNeedingChange, bool changeBrakeDisc, bool changeBrakePad, int exhaustsNeedingChange)
+        public JobSheet()
         {
-            TyresNeedingChange = tyresNeedingChange;
-            ChangeBrakeDisc = changeBrakeDisc;
-            ChangeBrakePad = changeBrakePad;
-            ExhaustsNeedingChange = exhaustsNeedingChange;
+        }
+
+        public bool RequiresBrakeDiscChange()
+        {
+            return BrakeDisc >= 1;
+        }
+
+        public bool RequiresBrakePadChange()
+        {
+            return BrakePad >= 1;
         }
     }
 }

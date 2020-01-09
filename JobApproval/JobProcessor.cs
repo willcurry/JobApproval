@@ -6,14 +6,14 @@ namespace JobApproval
     {
         public bool Process(JobSheet jobSheet)
         {
-            return jobSheet.TyresNeedingChange < 5 && BrakesCanBeChanged(jobSheet) && !(jobSheet.ExhaustsNeedingChange > 1);
+            return jobSheet.Tyres < 5 && BrakesCanBeChanged(jobSheet) && !(jobSheet.Exhaust > 1);
         }
 
         private bool BrakesCanBeChanged(JobSheet jobSheet)
         {
-            if (jobSheet.ChangeBrakePad || jobSheet.ChangeBrakeDisc)
+            if (jobSheet.RequiresBrakeDiscChange() || jobSheet.RequiresBrakePadChange())
             {
-                return jobSheet.ChangeBrakePad && jobSheet.ChangeBrakeDisc;
+                return jobSheet.RequiresBrakeDiscChange() && jobSheet.RequiresBrakePadChange();
             }
             return true;
         }

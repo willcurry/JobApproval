@@ -16,23 +16,27 @@ namespace JobApprovalTests
         [Test]
         public void DeniesJobSheetIfTyresAreGreaterThan4()
         {
-            JobSheet jobSheet = new JobSheet(5, false, false, 0);
+            JobSheet jobSheet = new JobSheet();
+            jobSheet.Tyres = 5;
             Assert.IsFalse(jobProcessor.Process(jobSheet));
         }
 
         [Test]
         public void DeniesJobSheetIfBrakePadsAndDiscAreNotBothBeingChanged()
         {
-            JobSheet jobSheet = new JobSheet(0, true, false, 0);
+            JobSheet jobSheet = new JobSheet();
+            jobSheet.BrakePad = 1;
             Assert.IsFalse(jobProcessor.Process(jobSheet));
-            jobSheet = new JobSheet(0, false, true, 0);
+            jobSheet = new JobSheet();
+            jobSheet.BrakeDisc = 1;
             Assert.IsFalse(jobProcessor.Process(jobSheet));
         }
 
         [Test]
         public void DeniesJobSheetIfExhaustIsGreaterThan1()
         {
-            JobSheet jobSheet = new JobSheet(0, false, false, 2);
+            JobSheet jobSheet = new JobSheet();
+            jobSheet.Exhaust = 2;
             Assert.IsFalse(jobProcessor.Process(jobSheet));
         }
     }
