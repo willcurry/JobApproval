@@ -20,7 +20,11 @@ namespace JobApprovalTests
         public void IfTyresAreGreaterThan4()
         {
             JobSheet jobSheet = new JobSheet(0);
-            jobSheet.Tyres = 5;
+            jobSheet.AddItem(new JobItem("tyre"));
+            jobSheet.AddItem(new JobItem("tyre"));
+            jobSheet.AddItem(new JobItem("tyre"));
+            jobSheet.AddItem(new JobItem("tyre"));
+            jobSheet.AddItem(new JobItem("tyre"));
             Assert.IsFalse(jobProcessor.Process(jobSheet));
         }
 
@@ -28,10 +32,10 @@ namespace JobApprovalTests
         public void IfBrakePadsAndDiscAreNotBothBeingChanged()
         {
             JobSheet jobSheet = new JobSheet(0);
-            jobSheet.BrakePad = 1;
+            jobSheet.AddItem(new JobItem("brake pad"));
             Assert.IsFalse(jobProcessor.Process(jobSheet));
             jobSheet = new JobSheet(0);
-            jobSheet.BrakeDisc = 1;
+            jobSheet.AddItem(new JobItem("brake disc"));
             Assert.IsFalse(jobProcessor.Process(jobSheet));
         }
 
@@ -39,7 +43,8 @@ namespace JobApprovalTests
         public void IfExhaustIsGreaterThan1()
         {
             JobSheet jobSheet = new JobSheet(0);
-            jobSheet.Exhaust = 2;
+            jobSheet.AddItem(new JobItem("exhaust"));
+            jobSheet.AddItem(new JobItem("exhaust"));
             Assert.IsFalse(jobProcessor.Process(jobSheet));
         }
 
@@ -47,7 +52,8 @@ namespace JobApprovalTests
         public void IfLabourHoursExceedTheReferenceNumber()
         {
             JobSheet jobSheet = new JobSheet(2);
-            jobSheet.Tyres = 2;
+            jobSheet.AddItem(new JobItem("tyre"));
+            jobSheet.AddItem(new JobItem("tyre"));
             Assert.IsFalse(jobProcessor.Process(jobSheet));
         }
     }

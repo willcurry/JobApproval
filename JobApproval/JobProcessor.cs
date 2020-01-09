@@ -28,22 +28,21 @@ namespace JobApproval
         private bool CheckLimits(JobSheet jobSheet)
         {
 
-            return jobSheet.Tyres < 5 && !(jobSheet.Exhaust > 1);
+            return jobSheet.CountItems("tyre") < 5 && !(jobSheet.CountItems("exhaust") > 1);
         }
 
         private int GetMinutes(string itemID)
         {
-            Item item = ReferenceData.GetItem(itemID);
-            return item.Time;
+            return ReferenceData.GetTime(itemID);
         }
 
         public int GetLabourHours(JobSheet jobSheet)
         {
-            int minutes = jobSheet.Tyres * GetMinutes("tyre") 
-                + jobSheet.BrakeDisc * GetMinutes("brake disc")
-                + jobSheet.BrakePad * GetMinutes("brake pad") 
-                + jobSheet.Oil * GetMinutes("oil") 
-                + jobSheet.Exhaust * GetMinutes("exhaust");
+            int minutes = 0;
+            foreach (JobItem item in jobSheet.Items)
+            {
+                minutes += ReferenceData.GetTime(item.ID);
+            }
             return minutes / 60;
         }
 

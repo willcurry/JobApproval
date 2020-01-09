@@ -6,36 +6,46 @@ namespace JobApproval
 {
     public class ReferenceData : IReferenceData
     {
-        IList<Item> data;
+        IDictionary<string, int> Prices;
+        IDictionary<string, int> Time;
 
         public ReferenceData()
         {
-            data = new List<Item>();
+            Prices = new Dictionary<string, int>();
+            Time = new Dictionary<string, int>();
             PopulateData();
         }
 
-        public Item GetItem(string itemID)
+        public int GetPrice(string itemID)
         {
-            foreach (Item item in data)
-            {
-                if (item.ID == itemID)
-                    return item;
+            int price;
+            if (Prices.TryGetValue(itemID, out price)) {
+                return price;
+            }
+            throw new KeyNotFoundException();
+        }
+
+        public int GetTime(string itemID)
+        {
+            int minutes;
+            if (Time.TryGetValue(itemID, out minutes)) {
+                return minutes;
             }
             throw new KeyNotFoundException();
         }
 
         private void PopulateData()
         {
-            Item tyre = new Item("tyre", 30, 200);
-            Item brakeDisc = new Item("brake disc", 90, 100);
-            Item brakePad = new Item("brake pad", 60, 50);
-            Item oil = new Item("oil", 30, 20);
-            Item exhaust = new Item("exhaust", 240, 175);
-            data.Add(tyre);
-            data.Add(brakeDisc);
-            data.Add(brakePad);
-            data.Add(oil);
-            data.Add(exhaust);
+            Time.Add("tyre", 30);
+            Prices.Add("tyre", 200);
+            Time.Add("brake disc", 90);
+            Prices.Add("brake disc", 100);
+            Time.Add("brake pad", 60);
+            Prices.Add("brake pad", 50);
+            Time.Add("oil", 30);
+            Prices.Add("oil", 20);
+            Time.Add("exhaust", 240);
+            Prices.Add("exhaust", 175);
         }
     }
 }
