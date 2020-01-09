@@ -6,7 +6,7 @@ namespace JobApproval
     {
         public bool Process(JobSheet jobSheet)
         {
-            return jobSheet.TyresNeedingChange < 5 && BrakesCanBeChanged(jobSheet);
+            return jobSheet.TyresNeedingChange < 5 && BrakesCanBeChanged(jobSheet) && !(jobSheet.ExhaustsNeedingChange > 1);
         }
 
         private bool BrakesCanBeChanged(JobSheet jobSheet)
