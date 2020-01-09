@@ -66,4 +66,27 @@ namespace JobApprovalTests
             Assert.IsFalse(JobProcessor.Process(jobSheet));
         }
     }
+
+    [TestFixture, Category("Job Processor Accepts")]
+    public class JobProcessorAccepts
+    {
+        JobProcessor JobProcessor;
+        IReferenceData ReferenceData;
+
+        [SetUp]
+        public void Setup()
+        {
+            ReferenceData = new ReferenceData();
+            JobProcessor = new JobProcessor(ReferenceData);
+        }
+
+        [Test]
+        public void IfTotalPriceIsWithin10PercentOfTheReferencePrice()
+        {
+            JobSheet jobSheet = new JobSheet(ReferenceData.GetUnitMinutes("tyre") * 2, ReferenceData.GetUnitCost("tyre") * 2);
+            jobSheet.AddItem(new JobItem("tyre"));
+            jobSheet.AddItem(new JobItem("tyre"));
+            Assert.IsTrue(JobProcessor.Process(jobSheet));
+        }
+    }
 }

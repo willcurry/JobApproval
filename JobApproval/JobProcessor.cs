@@ -78,7 +78,9 @@ namespace JobApproval
         private bool TotalPriceIsValid(JobSheet jobSheet)
         {
             int correctPrice = GetCorrectLabourPrice(jobSheet);
-            return jobSheet.TotalPrice < (correctPrice + correctPrice * 0.15);
+            double max = correctPrice + (correctPrice * 0.15);
+            double min = correctPrice - (correctPrice * 0.1);
+            return jobSheet.TotalPrice < max && jobSheet.TotalPrice > min;
         }
     }
 }
