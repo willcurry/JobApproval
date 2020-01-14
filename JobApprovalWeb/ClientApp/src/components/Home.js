@@ -29,8 +29,8 @@ export class Home extends Component {
         }
     }
 
-    handleResponse(responseJson) {
-        alert(JSON.stringify(responseJson));
+    handleResponse(responseText) {
+        alert(responseText);
     }
 
     handleSubmit(event) {
@@ -45,9 +45,9 @@ export class Home extends Component {
                 TotalPrice: parseInt(this.state.TotalPrice),
                 RequestedItems: JSON.stringify(this.state.RequestedItems)
             })
-        }).then((response) => response.json())
-            .then((responseJson) => {
-                this.handleResponse(responseJson);
+        }).then((response) => response.text())
+            .then((responseText) => {
+                this.handleResponse(responseText);
             })
     }
 
