@@ -18,9 +18,10 @@ namespace JobApprovalWeb.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        public void Get()
+        [HttpPost("submit")]
+        public ActionResult PostSubmit([FromBody] JobSheetModel jobSheet)
         {
+            return Ok(jobSheet);
         }
     }
 }
