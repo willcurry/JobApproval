@@ -44,6 +44,11 @@ namespace JobApproval
             return new KeyValuePair<int, int>(0, Int32.MaxValue);
         }
 
+        public bool ItemExists(string itemID)
+        {
+            return Time.ContainsKey(itemID) && Prices.ContainsKey(itemID);
+        }
+
         private void PopulateData()
         {
             Time.Add("tyre", 30);

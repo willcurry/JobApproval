@@ -81,7 +81,7 @@ namespace JobApprovalWebTests
         }
 
         [Test]
-        public async Task ItRespondsWithDeclineOutcome()
+        public async Task ItRespondsWithDeclineOutcomeWhenTooManyTyres()
         {
             var request = new
             {
@@ -91,6 +91,27 @@ namespace JobApprovalWebTests
                     TotalHours = _referenceData.GetUnitMinutes("tyre") * 2,
                     TotalPrice = _referenceData.GetUnitCost("tyre") * 2,
                     RequestedItems = "{\"tyre\":\"5\"}"
+                }
+            };
+
+            var content = GetStringContent(request.Body);
+            HttpResponseMessage response = await _client.PostAsync(request.Url, content);
+
+            response.EnsureSuccessStatusCode();
+            Assert.AreEqual("Decline", await response.Content.ReadAsStringAsync());
+        }
+
+        [Test]
+        public async Task ItRespondsWithDeclineOutcomeWhenItemsAreNotRecognised()
+        {
+            var request = new
+            {
+                Url = "JobApproval/submit",
+                Body = new
+                {
+                    TotalHours = 1,
+                    TotalPrice = 1,
+                    RequestedItems = "{\"boat\":\"1\"}"
                 }
             };
 

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
+using JobApproval;
 
 namespace JobApprovalWeb
 {
@@ -8,6 +9,12 @@ namespace JobApprovalWeb
         public int TotalPrice { get; set; }
         public int TotalHours { get; set; }
         public string RequestedItems { get; set; }
+        private ReferenceData _referenceData;
+
+        public JobSheetModel()
+        {
+            _referenceData = new ReferenceData();
+        }
 
         public List<string> GetRequestedItems()
         {
@@ -16,7 +23,10 @@ namespace JobApprovalWeb
             {
                 for (int i=0; i < item.Value; i++)
                 {
-                    items.Add(item.Key);
+                    if (_referenceData.ItemExists(item.Key))
+                    {
+                        items.Add(item.Key);
+                    }
                 }
             }
             return items;
