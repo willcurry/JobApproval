@@ -40,11 +40,11 @@ namespace JobApprovalTests
         [Test]
         public void IfBrakePadsAndDiscAreNotBothBeingChanged()
         {
-            JobSheet jobSheet = new JobSheet(ReferenceData.GetUnitMinutes("brake pad"), ReferenceData.GetUnitCost("brake pad"));
-            jobSheet.AddItem(new JobItem("brake pad"));
+            JobSheet jobSheet = new JobSheet(ReferenceData.GetUnitMinutes("brake_pad"), ReferenceData.GetUnitCost("brake_pad"));
+            jobSheet.AddItem(new JobItem("brake_pad"));
             Assert.AreEqual(JobProcessor.Process(jobSheet), Outcomes.Decline);
-            jobSheet = new JobSheet(ReferenceData.GetUnitMinutes("brake disc"), ReferenceData.GetUnitCost("brake disc"));
-            jobSheet.AddItem(new JobItem("brake disc"));
+            jobSheet = new JobSheet(ReferenceData.GetUnitMinutes("brake_disc"), ReferenceData.GetUnitCost("brake_disc"));
+            jobSheet.AddItem(new JobItem("brake_disc"));
             Assert.AreEqual(JobProcessor.Process(jobSheet), Outcomes.Decline);
         }
 

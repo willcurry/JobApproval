@@ -13,12 +13,12 @@ namespace JobApprovalWebTests
             JobSheetModel jobSheetModel = new JobSheetModel();
             jobSheetModel.TotalHours = 1;
             jobSheetModel.TotalPrice = 2;
-            jobSheetModel.RequestedItems = "{\"tyre\":\"2\",\"brake_discs\":\"1\"}";
+            jobSheetModel.RequestedItems = "{\"tyre\":\"2\",\"brake_disc\":\"1\"}";
 
             List<string> expected = new List<string>();
             expected.Add("tyre");
             expected.Add("tyre");
-            expected.Add("brake_discs");
+            expected.Add("brake_disc");
 
             Assert.AreEqual(expected, jobSheetModel.GetRequestedItems());
         }
