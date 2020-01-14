@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\JobApprovalWeb\JobApprovalWeb.csproj" />
+    <ProjectReference Include="..\JobApproval\JobApproval.csproj" />
   </ItemGroup>
 
 </Project>

@@ -3,12 +3,11 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using JobApproval;
 
 namespace JobApprovalWebTests
 {
@@ -16,6 +15,7 @@ namespace JobApprovalWebTests
     {
         private TestServer _server;
         private HttpClient _client;
+        private ReferenceData _referenceData;
 
         [OneTimeSetUp]
         public void OneTimeSetup()
@@ -24,6 +24,7 @@ namespace JobApprovalWebTests
             .UseStartup<Startup>()
             .UseEnvironment("Development"));
             _client = _server.CreateClient();
+            _referenceData = new ReferenceData();
         }
         
         [OneTimeTearDown]
@@ -36,7 +37,7 @@ namespace JobApprovalWebTests
         private StringContent GetStringContent(object obj)
             => new StringContent(JsonConvert.SerializeObject(obj), Encoding.Default, "application/json");
 
-        //"{\"tyres\":\"2\",\"brake_discs\":\"1\",\"brake_pads\":\"1\",\"oil\":\"1\",\"exhaust\":\"1\"}"
+        //"{\"tyre\":\"2\",\"brake_discs\":\"1\",\"brake_pads\":\"1\",\"oil\":\"1\",\"exhaust\":\"1\"}"
 
         [Test]
         public async Task ItRespondsOk()
@@ -48,7 +49,7 @@ namespace JobApprovalWebTests
                 {
                     TotalHours = 2,
                     TotalPrice = 1,
-                    RequestedItems = "{\"tyres\":\"2\"}"
+                    RequestedItems = "{\"tyre\":\"2\"}"
                 }
             };
 
@@ -59,16 +60,16 @@ namespace JobApprovalWebTests
         }
 
         [Test]
-        public async Task ItRespondsWithTheJobSheet()
+        public async Task ItRespondsWithApproveOutcome()
         {
             var request = new
             {
                 Url = "JobApproval/submit",
                 Body = new
                 {
-                    TotalHours = 2,
-                    TotalPrice = 1,
-                    RequestedItems = "{\"tyres\":\"2\"}"
+                    TotalHours = _referenceData.GetUnitMinutes("tyre") * 2,
+                    TotalPrice = _referenceData.GetUnitCost("tyre") * 2,
+                    RequestedItems = "{\"tyre\":\"2\"}"
                 }
             };
 
@@ -76,11 +77,28 @@ namespace JobApprovalWebTests
             HttpResponseMessage response = await _client.PostAsync(request.Url, content);
 
             response.EnsureSuccessStatusCode();
-            var expected = new Dictionary<string, object>();
-            expected.Add("TotalHours", 2);
-            expected.Add("TotalPrice", 1);
-            expected.Add("RequestedItems", request.Body.RequestedItems);
-            Assert.AreEqual(JsonConvert.SerializeObject(expected), await content.ReadAsStringAsync());
+            Assert.AreEqual("Approve", await response.Content.ReadAsStringAsync());
+        }
+
+        [Test]
+        public async Task ItRespondsWithDeclineOutcome()
+        {
+            var request = new
+            {
+                Url = "JobApproval/submit",
+                Body = new
+                {
+                    TotalHours = _referenceData.GetUnitMinutes("tyre") * 2,
+                    TotalPrice = _referenceData.GetUnitCost("tyre") * 2,
+                    RequestedItems = "{\"tyre\":\"5\"}"
+                }
+            };
+
+            var content = GetStringContent(request.Body);
+            HttpResponseMessage response = await _client.PostAsync(request.Url, content);
+
+            response.EnsureSuccessStatusCode();
+            Assert.AreEqual("Decline", await response.Content.ReadAsStringAsync());
         }
     }
 }

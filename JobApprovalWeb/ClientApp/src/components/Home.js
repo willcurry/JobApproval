@@ -45,10 +45,10 @@ export class Home extends Component {
                 TotalPrice: parseInt(this.state.TotalPrice),
                 RequestedItems: JSON.stringify(this.state.RequestedItems)
             })
-        }).then((response) => {
-            alert(response.status);
-            this.handleResponse(response.json());
-        })
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                this.handleResponse(responseJson);
+            })
     }
 
     render () {
@@ -56,7 +56,7 @@ export class Home extends Component {
           <form onSubmit={this.handleSubmit}>
             <div class="form-group">
                 <label for="tyre">Tyres</label>
-                <input type="number" onChange={this.onChange} class="form-control" id="tyres" placeholder="2"/>
+                <input type="number" onChange={this.onChange} class="form-control" id="tyre" placeholder="2"/>
             </div>
             <div class="form-group">
                 <label for="brake_discs">Brake Discs</label>

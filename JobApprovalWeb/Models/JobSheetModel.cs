@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace JobApprovalWeb
 {
@@ -10,9 +9,22 @@ namespace JobApprovalWeb
         public int TotalHours { get; set; }
         public string RequestedItems { get; set; }
 
-        public Dictionary<string, object> GetRequestedItems()
+        public List<string> GetRequestedItems()
         {
-            return JsonConvert.DeserializeObject<Dictionary<string, object>>(RequestedItems);
+            List<string> items = new List<string>();
+            foreach (KeyValuePair<string, int> item in RequestedItemsJsonToDictionary())
+            {
+                for (int i=0; i < item.Value; i++)
+                {
+                    items.Add(item.Key);
+                }
+            }
+            return items;
+        }
+
+        private Dictionary<string, int> RequestedItemsJsonToDictionary()
+        {
+            return JsonConvert.DeserializeObject<Dictionary<string, int>>(RequestedItems);
         }
     }
 }

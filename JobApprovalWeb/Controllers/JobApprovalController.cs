@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using JobApproval;
 
 namespace JobApprovalWeb.Controllers
 {
@@ -19,9 +16,16 @@ namespace JobApprovalWeb.Controllers
         }
 
         [HttpPost("submit")]
-        public ActionResult PostSubmit([FromBody] JobSheetModel jobSheet)
+        public IActionResult PostSubmit([FromBody] JobSheetModel jobSheetModel)
         {
-            return Ok(jobSheet);
+            JobProcessor jobProcessor = new JobProcessor(new ReferenceData());
+            JobSheet jobSheet = new JobSheet(jobSheetModel.TotalHours, jobSheetModel.TotalPrice);
+            foreach (string item in jobSheetModel.GetRequestedItems())
+            {
+                jobSheet.AddItem(new JobItem(item));
+            }
+            Outcomes outcome = jobProcessor.Process(jobSheet);
+            return Ok(outcome.ToString());
         }
     }
 }
