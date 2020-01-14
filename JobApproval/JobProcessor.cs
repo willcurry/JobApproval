@@ -52,7 +52,9 @@ namespace JobApproval
             List<string> distinctItems = jobSheet.Items.Select(item => item.ID).Distinct().ToList();
             foreach (string itemID in distinctItems)
             {
-                if (jobSheet.CountItems(itemID) > ReferenceData.GetLimit(itemID))
+                int min = ReferenceData.GetLimit(itemID).Key;
+                int max = ReferenceData.GetLimit(itemID).Value;
+                if (jobSheet.CountItems(itemID) > max || jobSheet.CountItems(itemID) < min)
                 {
                     return false;
                 }

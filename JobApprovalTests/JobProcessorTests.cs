@@ -30,6 +30,14 @@ namespace JobApprovalTests
         }
 
         [Test]
+        public void IfTyresAreLessThan2()
+        {
+            JobSheet jobSheet = new JobSheet(ReferenceData.GetUnitMinutes("tyre"), ReferenceData.GetUnitCost("tyre"));
+            jobSheet.AddItem(new JobItem("tyre"));
+            Assert.AreEqual(JobProcessor.Process(jobSheet), Outcomes.Decline);
+        }
+
+        [Test]
         public void IfBrakePadsAndDiscAreNotBothBeingChanged()
         {
             JobSheet jobSheet = new JobSheet(ReferenceData.GetUnitMinutes("brake pad"), ReferenceData.GetUnitCost("brake pad"));
@@ -68,7 +76,7 @@ namespace JobApprovalTests
         }
     }
 
-    [TestFixture, Category("Job Processor Accepts")]
+    [TestFixture, Category("Job Processor Approve/Refer")]
     public class JobProcessorAccepts
     {
         JobProcessor JobProcessor;

@@ -8,6 +8,6 @@ namespace JobApproval
     {
         int GetUnitCost(string itemID);
         int GetUnitMinutes(string itemID);
-        int GetLimit(string itemID);
+        KeyValuePair<int, int> GetLimit(string itemID);
     }
 }
