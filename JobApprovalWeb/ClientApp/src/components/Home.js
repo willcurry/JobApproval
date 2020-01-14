@@ -59,12 +59,12 @@ export class Home extends Component {
                 <input type="number" onChange={this.onChange} class="form-control" id="tyre" placeholder="2"/>
             </div>
             <div class="form-group">
-                <label for="brake_discs">Brake Discs</label>
-                <input type="number" onChange={this.onChange} class="form-control" id="brake_discs" placeholder="1"/>
+                <label for="brake_disc">Brake Discs</label>
+                <input type="number" onChange={this.onChange} class="form-control" id="brake_disc" placeholder="1"/>
             </div>
             <div class="form-group">
-                <label for="brake_pads">Brake Pads</label>
-                <input type="number" onChange={this.onChange} class="form-control" id="brake_pads" placeholder="1"/>
+                <label for="brake_pad">Brake Pads</label>
+                <input type="number" onChange={this.onChange} class="form-control" id="brake_pad" placeholder="1"/>
             </div>
             <div class="form-group">
                 <label for="oil">Oil</label>

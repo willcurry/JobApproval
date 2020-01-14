@@ -39,12 +39,12 @@ namespace JobApproval
 
         private bool RequiresBrakeDiscChange(JobSheet jobSheet)
         {
-            return jobSheet.CountItems("brake disc") >= 1;
+            return jobSheet.CountItems("brake_disc") >= 1;
         }
 
         private bool RequiresBrakePadChange(JobSheet jobSheet)
         {
-            return jobSheet.CountItems("brake pad") >= 1;
+            return jobSheet.CountItems("brake_pad") >= 1;
         }
 
         private bool CheckLimits(JobSheet jobSheet)

@@ -53,10 +53,10 @@ namespace JobApproval
         {
             Time.Add("tyre", 30);
             Prices.Add("tyre", 200);
-            Time.Add("brake disc", 90);
-            Prices.Add("brake disc", 100);
-            Time.Add("brake pad", 60);
-            Prices.Add("brake pad", 50);
+            Time.Add("brake_disc", 90);
+            Prices.Add("brake_disc", 100);
+            Time.Add("brake_pad", 60);
+            Prices.Add("brake_pad", 50);
             Time.Add("oil", 30);
             Prices.Add("oil", 20);
             Time.Add("exhaust", 240);
