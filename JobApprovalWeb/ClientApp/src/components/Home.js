@@ -51,36 +51,40 @@ export class Home extends Component {
             })
     }
 
+    getRandomInt(max) {
+        return Math.floor(Math.random() * Math.floor(max));
+    }
+
     render () {
       return (
           <form onSubmit={this.handleSubmit}>
             <div class="form-group">
-                <label for="tyre">Tyres</label>
-                <input type="number" onChange={this.onChange} class="form-control" id="tyre" placeholder="2"/>
+                  <label for="tyre">Tyres</label>
+                  <input type="number" onChange={this.onChange} class="form-control" id="tyre" value={this.getRandomInt(10)}/>
             </div>
             <div class="form-group">
                 <label for="brake_disc">Brake Discs</label>
-                <input type="number" onChange={this.onChange} class="form-control" id="brake_disc" placeholder="1"/>
+                <input type="number" onChange={this.onChange} class="form-control" id="brake_disc" value={this.getRandomInt(10)}/>
             </div>
             <div class="form-group">
                 <label for="brake_pad">Brake Pads</label>
-                <input type="number" onChange={this.onChange} class="form-control" id="brake_pad" placeholder="1"/>
+                <input type="number" onChange={this.onChange} class="form-control" id="brake_pad" value={this.getRandomInt(10)}/>
             </div>
             <div class="form-group">
                 <label for="oil">Oil</label>
-                <input type="number" onChange={this.onChange} class="form-control" id="oil" placeholder="1"/>
+                <input type="number" onChange={this.onChange} class="form-control" id="oil" value={this.getRandomInt(10)}/>
             </div>
             <div class="form-group">
                 <label for="exhaust">Exhaust</label>
-                <input type="number" onChange={this.onChange} class="form-control" id="exhaust" placeholder="1"/>
+                <input type="number" onChange={this.onChange} class="form-control" id="exhaust" value={this.getRandomInt(10)}/>
             </div>
             <div class="form-group">
                 <label for="total_hours">Total Hours</label>
-                <input type="number" onChange={this.onChange} class="form-control" id="total_hours" placeholder="1"/>
+                <input type="number" onChange={this.onChange} class="form-control" id="total_hours" value={this.getRandomInt(10)}/>
             </div>
             <div class="form-group">
                 <label for="total_price">Total Price</label>
-                <input type="number" onChange={this.onChange} class="form-control" id="total_price" placeholder="1"/>
+                <input type="number" onChange={this.onChange} class="form-control" id="total_price" value={this.getRandomInt(10)}/>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
