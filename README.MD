@@ -19,3 +19,20 @@ JobApprovalWeb is a asp.net + react project which implements the JobApproval lib
 JobApprovalTests is a nUnit project holding all the unit tests for the JobApprovalLibrary.
 
 JobApprovalWebTests is a nUnit project holding all the unit/integration tests for the web site.
+
+
+### API 
+
+The web api can be accessed with the end point:
+
+`/JobApproval/submit`
+
+The end point requires a json payload which contains the total minutes, total price and requested items. It could look something like this:
+
+`{"TotalMinutes":60,"TotalPrice":400,"RequestedItems":"{\"tyre\":\"2\"}"}`
+
+You will get a text response with the outcome.
+
+![postman](https://i.gyazo.com/4c79f290c1821b0f992a248a16075c98.png)
+
+Alternatively you can just reference the JobApproval class library in your project and instantiate the JobProcessor class.
