@@ -28,7 +28,7 @@ namespace JobApprovalTests
             JobSheet.AddItem(new JobItem("tyre"));
             JobSheet.AddItem(new JobItem("tyre"));
             JobSheet.AddItem(new JobItem("exhaust"));
-            Assert.AreEqual(JobSheet.CountItems("tyre"), 3);
+            Assert.AreEqual(JobSheet.CountSpecificItem("tyre"), 3);
         }
 
     }

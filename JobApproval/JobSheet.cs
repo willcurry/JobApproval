@@ -21,7 +21,7 @@ namespace JobApproval
             Items.Add(item);
         }
 
-        public int CountItems(string itemID)
+        public int CountSpecificItem(string itemID)
         {
             return FindItems(itemID).Count();
         }

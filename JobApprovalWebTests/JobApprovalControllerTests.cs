@@ -163,6 +163,26 @@ namespace JobApprovalWebTests
         }
 
         [Test]
+        public async Task ItRespondsWithDeclineOutcomeWhenItemsAreEmpty()
+        {
+            var request = new
+            {
+                Url = "JobApproval/submit",
+                Body = new
+                {
+                    TotalMinutes = 0,
+                    TotalPrice = 0,
+                    RequestedItems = "{}"
+                }
+            };
+
+            var content = GetStringContent(request.Body);
+            HttpResponseMessage response = await _client.PostAsync(request.Url, content);
+
+            response.EnsureSuccessStatusCode();
+            Assert.AreEqual("Decline", await response.Content.ReadAsStringAsync());
+        }
+        [Test]
         public async Task ItResponds400WhenRequestedItemsIsEmpty()
         {
             var request = new

@@ -74,6 +74,13 @@ namespace JobApprovalTests
             jobSheet.AddItem(new JobItem("tyre"));
             Assert.AreEqual(JobProcessor.Process(jobSheet), Outcomes.Decline);
         }
+
+        [Test]
+        public void IfItemsAreEmpty()
+        {
+            JobSheet jobSheet = new JobSheet(0, 0);
+            Assert.AreEqual(JobProcessor.Process(jobSheet), Outcomes.Decline);
+        }
     }
 
     [TestFixture, Category("Job Processor Approve/Refer")]

@@ -21,7 +21,7 @@ namespace JobApproval
 
         public Outcomes Process(JobSheet jobSheet)
         {
-            if (CheckLimits(jobSheet) && BrakesCanBeChanged(jobSheet) && TotalHoursAreValid(jobSheet))
+            if (CheckLimits(jobSheet) && BrakesCanBeChanged(jobSheet) && TotalHoursAreValid(jobSheet) && jobSheet.Items.Count() > 0)
             {
                 return DetermineOutCome(jobSheet);
             }
@@ -37,12 +37,12 @@ namespace JobApproval
 
         private bool RequiresBrakeDiscChange(JobSheet jobSheet)
         {
-            return jobSheet.CountItems("brake_disc") >= 1;
+            return jobSheet.CountSpecificItem("brake_disc") >= 1;
         }
 
         private bool RequiresBrakePadChange(JobSheet jobSheet)
         {
-            return jobSheet.CountItems("brake_pad") >= 1;
+            return jobSheet.CountSpecificItem("brake_pad") >= 1;
         }
 
         private bool CheckLimits(JobSheet jobSheet)
@@ -52,7 +52,7 @@ namespace JobApproval
             {
                 int min = ReferenceData.GetLimit(itemID).Key;
                 int max = ReferenceData.GetLimit(itemID).Value;
-                if (jobSheet.CountItems(itemID) > max || jobSheet.CountItems(itemID) < min)
+                if (jobSheet.CountSpecificItem(itemID) > max || jobSheet.CountSpecificItem(itemID) < min)
                 {
                     return false;
                 }
