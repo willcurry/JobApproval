@@ -45,7 +45,7 @@ namespace JobApprovalWebTests
                 Url = "JobApproval/submit",
                 Body = new
                 {
-                    TotalHours = 2,
+                    TotalMinutes = 2,
                     TotalPrice = 1,
                     RequestedItems = "{\"tyre\":\"2\"}"
                 }
@@ -65,7 +65,7 @@ namespace JobApprovalWebTests
                 Url = "JobApproval/submit",
                 Body = new
                 {
-                    TotalHours = _referenceData.GetUnitMinutes("tyre") * 2,
+                    TotalMinutes = _referenceData.GetUnitMinutes("tyre") * 2,
                     TotalPrice = _referenceData.GetUnitCost("tyre") * 2,
                     RequestedItems = "{\"tyre\":\"2\"}"
                 }
@@ -86,9 +86,51 @@ namespace JobApprovalWebTests
                 Url = "JobApproval/submit",
                 Body = new
                 {
-                    TotalHours = _referenceData.GetUnitMinutes("tyre") * 5,
+                    TotalMinutes = _referenceData.GetUnitMinutes("tyre") * 5,
                     TotalPrice = _referenceData.GetUnitCost("tyre") * 5,
                     RequestedItems = "{\"tyre\":\"5\"}"
+                }
+            };
+
+            var content = GetStringContent(request.Body);
+            HttpResponseMessage response = await _client.PostAsync(request.Url, content);
+
+            response.EnsureSuccessStatusCode();
+            Assert.AreEqual("Decline", await response.Content.ReadAsStringAsync());
+        }
+
+        [Test]
+        public async Task ItRespondsWithDeclineIfMinutesDontMatchUp()
+        {
+            var request = new
+            {
+                Url = "JobApproval/submit",
+                Body = new
+                {
+                    TotalMinutes = 10000,
+                    TotalPrice = _referenceData.GetUnitCost("tyre") * 2 + _referenceData.GetUnitCost("exhaust"),
+                    RequestedItems = "{\"tyre\":\"2\", \"exhaust\":\"1\"}"
+                }
+            };
+
+            var content = GetStringContent(request.Body);
+            HttpResponseMessage response = await _client.PostAsync(request.Url, content);
+
+            response.EnsureSuccessStatusCode();
+            Assert.AreEqual("Decline", await response.Content.ReadAsStringAsync());
+        }
+
+        [Test]
+        public async Task ItRespondsWithDeclineIfPriceDontMatchUp()
+        {
+            var request = new
+            {
+                Url = "JobApproval/submit",
+                Body = new
+                {
+                    TotalMinutes = _referenceData.GetUnitMinutes("tyre") * 2 + _referenceData.GetUnitMinutes("exhaust"),
+                    TotalPrice = 10000,
+                    RequestedItems = "{\"tyre\":\"2\", \"exhaust\":\"1\"}"
                 }
             };
 
@@ -107,7 +149,7 @@ namespace JobApprovalWebTests
                 Url = "JobApproval/submit",
                 Body = new
                 {
-                    TotalHours = 1,
+                    TotalMinutes = 1,
                     TotalPrice = 1,
                     RequestedItems = "{\"boat\":\"1\"}"
                 }
@@ -128,7 +170,7 @@ namespace JobApprovalWebTests
                 Url = "JobApproval/submit",
                 Body = new
                 {
-                    TotalHours = _referenceData.GetUnitMinutes("tyre") * 2,
+                    TotalMinutes = _referenceData.GetUnitMinutes("tyre") * 2,
                     TotalPrice = _referenceData.GetUnitCost("tyre") * 2,
                     RequestedItems = ""
                 }
@@ -166,7 +208,7 @@ namespace JobApprovalWebTests
                 Url = "JobApproval/submit",
                 Body = new
                 {
-                    TotalHours = "test",
+                    TotalMinutes = "test",
                     TotalPrice = "$(%",
                     RequestedItems = "{\"tyre\":\"2\"}"
                 }

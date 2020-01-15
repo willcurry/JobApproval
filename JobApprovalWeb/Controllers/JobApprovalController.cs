@@ -19,11 +19,11 @@ namespace JobApprovalWeb.Controllers
         public IActionResult PostSubmit([FromBody] JobSheetModel jobSheetModel)
         {
             JobProcessor jobProcessor = new JobProcessor(new ReferenceData());
-            Outcomes outcome = jobProcessor.Process(ProcessJobSheetModel(jobSheetModel));
+            Outcomes outcome = jobProcessor.Process(CreateJobSheetFromModel(jobSheetModel));
             return Ok(outcome.ToString());
         }
 
-        private JobSheet ProcessJobSheetModel(JobSheetModel jobSheetModel)
+        private JobSheet CreateJobSheetFromModel(JobSheetModel jobSheetModel)
         {
             JobSheet jobSheet = new JobSheet(jobSheetModel.TotalMinutes, jobSheetModel.TotalPrice);
             foreach (string item in jobSheetModel.GetRequestedItems())
