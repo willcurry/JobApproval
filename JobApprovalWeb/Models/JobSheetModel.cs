@@ -1,13 +1,17 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using JobApproval;
+using System.ComponentModel.DataAnnotations;
 
 namespace JobApprovalWeb
 {
     public class JobSheetModel
     {
+        [Required]
         public int TotalPrice { get; set; }
+        [Required]
         public int TotalMinutes { get; set; }
+        [Required]
         public string RequestedItems { get; set; }
         private ReferenceData _referenceData;
 

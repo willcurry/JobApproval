@@ -86,8 +86,8 @@ namespace JobApprovalWebTests
                 Url = "JobApproval/submit",
                 Body = new
                 {
-                    TotalHours = _referenceData.GetUnitMinutes("tyre") * 2,
-                    TotalPrice = _referenceData.GetUnitCost("tyre") * 2,
+                    TotalHours = _referenceData.GetUnitMinutes("tyre") * 5,
+                    TotalPrice = _referenceData.GetUnitCost("tyre") * 5,
                     RequestedItems = "{\"tyre\":\"5\"}"
                 }
             };
@@ -121,7 +121,7 @@ namespace JobApprovalWebTests
         }
 
         [Test]
-        public async Task ItRespondsDeclineWhenRequestedItemsIsEmpty()
+        public async Task ItResponds400WhenRequestedItemsIsEmpty()
         {
             var request = new
             {
@@ -137,8 +137,25 @@ namespace JobApprovalWebTests
             var content = GetStringContent(request.Body);
             HttpResponseMessage response = await _client.PostAsync(request.Url, content);
 
-            response.EnsureSuccessStatusCode();
-            Assert.AreEqual("Decline", await response.Content.ReadAsStringAsync());
+            Assert.AreEqual("BadRequest", response.StatusCode.ToString());
+        }
+
+        [Test]
+        public async Task ItResponds400WhenRequiredFieldsAreNotPresent()
+        {
+            var request = new
+            {
+                Url = "JobApproval/submit",
+                Body = new
+                {
+
+                }
+            };
+
+            var content = GetStringContent(request.Body);
+            HttpResponseMessage response = await _client.PostAsync(request.Url, content);
+
+            Assert.AreEqual("BadRequest", response.StatusCode.ToString());
         }
     }
 }
