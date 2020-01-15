@@ -157,5 +157,25 @@ namespace JobApprovalWebTests
 
             Assert.AreEqual("BadRequest", response.StatusCode.ToString());
         }
+
+        [Test]
+        public async Task ItResponds400WhenRequiredFieldsAreNotValid()
+        {
+            var request = new
+            {
+                Url = "JobApproval/submit",
+                Body = new
+                {
+                    TotalHours = "test",
+                    TotalPrice = "$(%",
+                    RequestedItems = "{\"tyre\":\"2\"}"
+                }
+            };
+
+            var content = GetStringContent(request.Body);
+            HttpResponseMessage response = await _client.PostAsync(request.Url, content);
+
+            Assert.AreEqual("BadRequest", response.StatusCode.ToString());
+        }
     }
 }
