@@ -37,8 +37,6 @@ namespace JobApprovalWebTests
         private StringContent GetStringContent(object obj)
             => new StringContent(JsonConvert.SerializeObject(obj), Encoding.Default, "application/json");
 
-        //"{\"tyre\":\"2\",\"brake_discs\":\"1\",\"brake_pads\":\"1\",\"oil\":\"1\",\"exhaust\":\"1\"}"
-
         [Test]
         public async Task ItRespondsOk()
         {
@@ -112,6 +110,27 @@ namespace JobApprovalWebTests
                     TotalHours = 1,
                     TotalPrice = 1,
                     RequestedItems = "{\"boat\":\"1\"}"
+                }
+            };
+
+            var content = GetStringContent(request.Body);
+            HttpResponseMessage response = await _client.PostAsync(request.Url, content);
+
+            response.EnsureSuccessStatusCode();
+            Assert.AreEqual("Decline", await response.Content.ReadAsStringAsync());
+        }
+
+        [Test]
+        public async Task ItRespondsDeclineWhenRequestedItemsIsEmpty()
+        {
+            var request = new
+            {
+                Url = "JobApproval/submit",
+                Body = new
+                {
+                    TotalHours = _referenceData.GetUnitMinutes("tyre") * 2,
+                    TotalPrice = _referenceData.GetUnitCost("tyre") * 2,
+                    RequestedItems = ""
                 }
             };
 

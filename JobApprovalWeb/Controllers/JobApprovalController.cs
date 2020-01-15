@@ -25,11 +25,9 @@ namespace JobApprovalWeb.Controllers
 
         private JobSheet ProcessJobSheetModel(JobSheetModel jobSheetModel)
         {
-            JobSheet jobSheet = new JobSheet(jobSheetModel.TotalHours, jobSheetModel.TotalPrice);
+            JobSheet jobSheet = new JobSheet(jobSheetModel.TotalMinutes, jobSheetModel.TotalPrice);
             foreach (string item in jobSheetModel.GetRequestedItems())
-            {
                 jobSheet.AddItem(new JobItem(item));
-            }
             return jobSheet;
         }
     }

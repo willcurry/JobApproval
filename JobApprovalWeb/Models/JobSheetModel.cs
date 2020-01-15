@@ -7,7 +7,7 @@ namespace JobApprovalWeb
     public class JobSheetModel
     {
         public int TotalPrice { get; set; }
-        public int TotalHours { get; set; }
+        public int TotalMinutes { get; set; }
         public string RequestedItems { get; set; }
         private ReferenceData _referenceData;
 
@@ -22,19 +22,16 @@ namespace JobApprovalWeb
             foreach (KeyValuePair<string, int> item in RequestedItemsJsonToDictionary())
             {
                 for (int i=0; i < item.Value; i++)
-                {
                     if (_referenceData.ItemExists(item.Key))
-                    {
                         items.Add(item.Key);
-                    }
-                }
             }
             return items;
         }
 
         private Dictionary<string, int> RequestedItemsJsonToDictionary()
         {
-            return JsonConvert.DeserializeObject<Dictionary<string, int>>(RequestedItems);
+            var items = JsonConvert.DeserializeObject<Dictionary<string, int>>(RequestedItems);
+            return items == null ? new Dictionary<string, int>() : items;
         }
     }
 }

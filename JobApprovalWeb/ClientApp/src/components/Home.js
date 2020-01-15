@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 const initialstate = {
     TotalPrice: 0,
-    TotalHours: 0,
+    TotalMinutes: 0,
     RequestedItems: {}
 }
 
@@ -20,8 +20,8 @@ export class Home extends Component {
     onChange(e) {
         if (e.target.id === 'total_price') {
             this.setState({ TotalPrice: e.target.value });
-        } else if (e.target.id === 'total_hours') {
-            this.setState({ TotalHours: e.target.value });
+        } else if (e.target.id === 'total_minutes') {
+            this.setState({ TotalMinutes: e.target.value });
         } else {
             var currentItems = this.state.RequestedItems;
             currentItems[e.target.id] = e.target.value;
@@ -41,7 +41,7 @@ export class Home extends Component {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                TotalHours: parseInt(this.state.TotalHours),
+                TotalMinutes: parseInt(this.state.TotalMinutes),
                 TotalPrice: parseInt(this.state.TotalPrice),
                 RequestedItems: JSON.stringify(this.state.RequestedItems)
             })
@@ -79,8 +79,8 @@ export class Home extends Component {
                 <input type="number" onChange={this.onChange} class="form-control" id="exhaust" value={this.getRandomInt(10)}/>
             </div>
             <div class="form-group">
-                <label for="total_hours">Total Hours</label>
-                <input type="number" onChange={this.onChange} class="form-control" id="total_hours" value={this.getRandomInt(10)}/>
+                <label for="total_minutes">Total Minutes</label>
+                <input type="number" onChange={this.onChange} class="form-control" id="total_minutes" value={this.getRandomInt(60)}/>
             </div>
             <div class="form-group">
                 <label for="total_price">Total Price</label>

@@ -31,9 +31,7 @@ namespace JobApproval
         private bool BrakesCanBeChanged(JobSheet jobSheet)
         {
             if (RequiresBrakeDiscChange(jobSheet) || RequiresBrakePadChange(jobSheet))
-            {
                 return RequiresBrakeDiscChange(jobSheet) && RequiresBrakePadChange(jobSheet);
-            }
             return true;
         }
 

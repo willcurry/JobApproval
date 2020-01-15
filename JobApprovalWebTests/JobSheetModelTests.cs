@@ -11,7 +11,7 @@ namespace JobApprovalWebTests
         public void ItConvertsJSonAndReturnsItemsAsList()
         {
             JobSheetModel jobSheetModel = new JobSheetModel();
-            jobSheetModel.TotalHours = 1;
+            jobSheetModel.TotalMinutes = 1;
             jobSheetModel.TotalPrice = 2;
             jobSheetModel.RequestedItems = "{\"tyre\":\"2\",\"brake_disc\":\"1\"}";
 
